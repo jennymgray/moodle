@@ -124,7 +124,7 @@ if ($show == 'course' and $courseid) { // Course tags.
 } else {
     // All tags for courses and blogs and any thing else tagged - the fallback default ($show == all).
     $subtitle = $showalltags;
-    $tags = tag_print_cloud(coursetag_get_all_tags('popularity'), 150, true);
+    $tags = tag_print_cloud(coursetag_get_all_tags(), 150, true);
 }
 
 // Reinstate original sort order global
