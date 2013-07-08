@@ -103,15 +103,25 @@ if ($courseid) {
 $myurl = $CFG->wwwroot.'/tag/coursetags_more.php';
 $myurl2 = $CFG->wwwroot.'/tag/coursetags_more.php?show='.$show;
 
+// Set up sort order global
+$oldsort = $CFG->tagsort;
+if ($sort == 'popularity') {
+    $CFG->tagsort = 'count';
+} else if ($sort == 'date') {
+    $CFG->tagsort = 'timemodified';
+} else {
+    $CFG->tagsort = 'name';
+}
+
 // Course tags
 if ($show == 'course' and $courseid) {
 
     if ($sort == 'popularity') {
         $tags = tag_print_cloud(coursetag_get_tags($courseid, 0, '', 0, 'popularity'), 150, true);
     } else if ($sort == 'date') {
-        $tags = tag_print_cloud(coursetag_get_tags($courseid, 0, '', 0, 'timemodified'), 150, true);
+        $tags = tag_print_cloud(coursetag_get_tags($courseid, 0, '', 0, 'popularity'), 150, true);
     } else {
-        $tags = tag_print_cloud(coursetag_get_tags($courseid, 0, '', 0, 'name'), 150, true);
+        $tags = tag_print_cloud(coursetag_get_tags($courseid, 0, '', 0, 'popularity'), 150, true);
     }
 
     // My tags
@@ -134,9 +144,9 @@ if ($show == 'course' and $courseid) {
     if ($sort == 'popularity') {
         $tags = tag_print_cloud(coursetag_get_tags(0, 0, 'official', 0, 'popularity'), 150, true);
     } else if ($sort == 'date') {
-        $tags = tag_print_cloud(coursetag_get_tags(0, 0, 'official', 0, 'timemodified'), 150, true);
+        $tags = tag_print_cloud(coursetag_get_tags(0, 0, 'official', 0, 'popularity'), 150, true);
     } else {
-        $tags = tag_print_cloud(coursetag_get_tags(0, 0, 'official', 0, 'name'), 150, true);
+        $tags = tag_print_cloud(coursetag_get_tags(0, 0, 'official', 0, 'popularity'), 150, true);
     }
 
     // Community (official and personal together) also called user tags
@@ -145,26 +155,26 @@ if ($show == 'course' and $courseid) {
     if ($sort == 'popularity') {
         $tags = tag_print_cloud(coursetag_get_tags(0, 0, 'default', 0, 'popularity'), 150, true);
     } else if ($sort == 'date') {
-        $tags = tag_print_cloud(coursetag_get_tags(0, 0, 'default', 0, 'timemodified'), 150, true);
+        $tags = tag_print_cloud(coursetag_get_tags(0, 0, 'default', 0, 'popularity'), 150, true);
     } else {
-        $tags = tag_print_cloud(coursetag_get_tags(0, 0, 'default', 0, 'name'), 150, true);
+        $tags = tag_print_cloud(coursetag_get_tags(0, 0, 'default', 0, 'popularity'), 150, true);
     }
 
     // All tags for courses and blogs and any thing else tagged - the fallback default ($show == all)
 } else {
     $subtitle = $showalltags;
     if ($sort == 'popularity') {
-        $CFG->tagsort = 'count';
         $tags = tag_print_cloud(coursetag_get_all_tags('popularity'), 150, true);
     } else if ($sort == 'date') {
-        $CFG->tagsort = 'timemodified';
         $tags = tag_print_cloud(coursetag_get_all_tags('popularity'), 150, true);
     } else {
-        $CFG->tagsort = 'name';
         $tags = tag_print_cloud(coursetag_get_all_tags('popularity'), 150, true);
     }
 
 }
+
+// Reinstate original sort order global
+$CFG->tagsort = $oldsort;
 
 // Prepare the links for the show and order lines
 if ($show == 'all') {
