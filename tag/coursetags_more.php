@@ -147,14 +147,16 @@ if ($show == 'course' and $courseid) {
 
 // All tags for courses and blogs and any thing else tagged - the fallback default ($show == all)
 } else {
-
     $subtitle = $showalltags;
     if ($sort == 'popularity') {
+        $CFG->tagsort = 'count';
         $tags = tag_print_cloud(coursetag_get_all_tags('popularity'), 150, true);
     } else if ($sort == 'date') {
-        $tags = tag_print_cloud(coursetag_get_all_tags('timemodified'), 150, true);
+        $CFG->tagsort = 'timemodified';
+        $tags = tag_print_cloud(coursetag_get_all_tags('popularity'), 150, true);
     } else {
-        $tags = tag_print_cloud(coursetag_get_all_tags('name'), 150, true);
+        $CFG->tagsort = 'name';
+        $tags = tag_print_cloud(coursetag_get_all_tags('popularity'), 150, true);
     }
 
 }
