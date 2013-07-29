@@ -37,9 +37,10 @@ require_once $CFG->dirroot.'/tag/locallib.php';
  * @param    string   $tagtype  (optional) The type of tag, empty string returns all types. Currently (Moodle 2.2) there are two
  *                              types of tags which are used within Moodle, they are 'official' and 'default'.
  * @param    int      $numtags  (optional) number of tags to display, default of 80 is set in the block, 0 returns all
+ * @param    string   $unused   (optional) was selected sorting, moved to tag_print_cloud()
  * @return   array
  */
-function coursetag_get_tags($courseid, $userid=0, $tagtype='', $numtags=0) {
+function coursetag_get_tags($courseid, $userid=0, $tagtype='', $numtags=0, $unused = '') {
 
     global $CFG, $DB;
 
@@ -111,11 +112,11 @@ function coursetag_get_tags($courseid, $userid=0, $tagtype='', $numtags=0) {
  *
  * @package  core_tag
  * @category tag
- * @param    string $sort    (optional) selected sorting, default is alpha sort (name) also timemodified or popularity
+ * @param    string $unused (optional) was selected sorting - moved to tag_print_cloud()
  * @param    int    $numtags (optional) number of tags to display, default of 20 is set in the block, 0 returns all
  * @return   array
  */
-function coursetag_get_all_tags($numtags=0) {
+function coursetag_get_all_tags($unused='', $numtags=0) {
 
     global $CFG, $DB;
 
