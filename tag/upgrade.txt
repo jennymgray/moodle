@@ -9,3 +9,11 @@ changes, see MDL-15471
 * coursetag_print_cloud() was removed.
 * coursetag_get_official_keywords() was removed
 * coursetag_rss_feeds() was removed
+
+=== 2.6 ===
+
+More cleanup was done to tag cloud sorting which involved some API changes, see MDL_39800
+* tag_print_cloud() arguments were changed.
+* coursetag_get_tags() arguments were changed.
+* coursetag_get_all_tags() arguments were changed.
+* coursetag_sort() was removed.

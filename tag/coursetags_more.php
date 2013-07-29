@@ -103,32 +103,19 @@ if ($courseid) {
 $myurl = $CFG->wwwroot.'/tag/coursetags_more.php';
 $myurl2 = $CFG->wwwroot.'/tag/coursetags_more.php?show='.$show;
 
-// Set up sort order global
-$oldsort = $CFG->tagsort;
-if ($sort == 'popularity') {
-    $CFG->tagsort = 'count';
-} else if ($sort == 'date') {
-    $CFG->tagsort = 'timemodified';
-} else {
-    $CFG->tagsort = 'name';
-}
-
 if ($show == 'course' and $courseid) { // Course tags.
-    $tags = tag_print_cloud(coursetag_get_tags($courseid, 0, ''), 150, true);
+    $tags = tag_print_cloud(coursetag_get_tags($courseid, 0, ''), 150, true, $sort);
 } else if ($show == 'my' and $loggedin) { // My tags.
-    $tags = tag_print_cloud(coursetag_get_tags(0, $USER->id, 'default'), 150, true);
+    $tags = tag_print_cloud(coursetag_get_tags(0, $USER->id, 'default'), 150, true, $sort);
 } else if ($show == 'official') { // Official course tags.
-    $tags = tag_print_cloud(coursetag_get_tags(0, 0, 'official'), 150, true);
+    $tags = tag_print_cloud(coursetag_get_tags(0, 0, 'official'), 150, true, $sort);
 } else if ($show == 'community') { // Community (official and personal together) also called user tags.
-    $tags = tag_print_cloud(coursetag_get_tags(0, 0, 'default'), 150, true);
+    $tags = tag_print_cloud(coursetag_get_tags(0, 0, 'default'), 150, true, $sort);
 } else {
     // All tags for courses and blogs and any thing else tagged - the fallback default ($show == all).
     $subtitle = $showalltags;
-    $tags = tag_print_cloud(coursetag_get_all_tags(), 150, true);
+    $tags = tag_print_cloud(coursetag_get_all_tags(), 150, true, $sort);
 }
-
-// Reinstate original sort order global
-$CFG->tagsort = $oldsort;
 
 // Prepare the links for the show and order lines
 if ($show == 'all') {
